@@ -1,0 +1,40 @@
+stages:
+  preprocess:
+    cmd: python src/preprocess.py --config=params.yaml
+    deps:
+      - src/preprocess.py
+      - data/winequality-red.csv
+    params:
+      - data.raw_path
+      - data.processed_path
+      - preprocess
+      - training.test_size
+      - training.random_state
+    outs:
+      - data/processed
+
+  train:
+    cmd: python src/train.py --config=params.yaml
+    deps:
+      - src/train.py
+      - data/processed
+    params:
+      - model
+      - training.random_state
+    outs:
+      - models/model.pkl
+
+  evaluate:
+    cmd: python src/evaluate.py --config=params.yaml
+    deps:
+      - src/evaluate.py
+      - data/processed
+      - models/model.pkl
+    params:
+      - evaluate.model_path
+    metrics:
+      - metrics/metrics.json:
+          cache: false
+    plots:
+      - plots:
+          cache: false

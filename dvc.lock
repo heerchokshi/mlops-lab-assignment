@@ -1,0 +1,86 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python src/preprocess.py --config=params.yaml
+    deps:
+    - path: data/winequality-red.csv
+      hash: md5
+      md5: 2daeecee174368f8a33b82c8cccae3a5
+      size: 84199
+    - path: src/preprocess.py
+      hash: md5
+      md5: eb6207a55db48d8040ebed64398971d4
+      size: 1579
+    params:
+      params.yaml:
+        data.processed_path: data/processed
+        data.raw_path: data/winequality-red.csv
+        preprocess:
+          target_col: quality
+        training.random_state: 42
+        training.test_size: 0.2
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: d620cccda264be3e22ff794387fefd83.dir
+      size: 92145
+      nfiles: 2
+  train:
+    cmd: python src/train.py --config=params.yaml
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: d620cccda264be3e22ff794387fefd83.dir
+      size: 92145
+      nfiles: 2
+    - path: src/train.py
+      hash: md5
+      md5: 4479bed1a8906a4fd009d027070db492
+      size: 1659
+    params:
+      params.yaml:
+        model:
+          name: random_forest
+          random_forest:
+            n_estimators: 200
+            max_depth: 7
+            random_state: 42
+          logistic_regression:
+            C: 0.1
+            solver: liblinear
+            random_state: 42
+        training.random_state: 42
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: c96a4b565fec0359da06ad75c3eff109
+      size: 3463961
+  evaluate:
+    cmd: python src/evaluate.py --config=params.yaml
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: d620cccda264be3e22ff794387fefd83.dir
+      size: 92145
+      nfiles: 2
+    - path: models/model.pkl
+      hash: md5
+      md5: c96a4b565fec0359da06ad75c3eff109
+      size: 3463961
+    - path: src/evaluate.py
+      hash: md5
+      md5: 694d203a406221f532ebaa6b6d7cc06f
+      size: 2236
+    params:
+      params.yaml:
+        evaluate.model_path: models/model.pkl
+    outs:
+    - path: metrics/metrics.json
+      hash: md5
+      md5: 4d28ccd67f97179a0811e8fae903dac7
+      size: 64
+    - path: plots
+      hash: md5
+      md5: 1d722a94e406a805657ac5bf50ab9bea.dir
+      size: 22518
+      nfiles: 1
