@@ -40,7 +40,7 @@ stages:
     params:
       params.yaml:
         model:
-          name: random_forest
+          name: logistic_regression
           random_forest:
             n_estimators: 300
             max_depth: 10
@@ -53,8 +53,8 @@ stages:
     outs:
     - path: models/model.pkl
       hash: md5
-      md5: b25448c62c79f07ce37fc5c87329af84
-      size: 11990489
+      md5: dd6f6a522aa32c294c923dfe6c4d2ae1
+      size: 1903
   evaluate:
     cmd: python src/evaluate.py --config=params.yaml
     deps:
@@ -65,8 +65,8 @@ stages:
       nfiles: 2
     - path: models/model.pkl
       hash: md5
-      md5: b25448c62c79f07ce37fc5c87329af84
-      size: 11990489
+      md5: dd6f6a522aa32c294c923dfe6c4d2ae1
+      size: 1903
     - path: src/evaluate.py
       hash: md5
       md5: 694d203a406221f532ebaa6b6d7cc06f
@@ -77,10 +77,10 @@ stages:
     outs:
     - path: metrics/metrics.json
       hash: md5
-      md5: 6403c76cf4d274df9dcdc28f52e66c74
-      size: 64
+      md5: 7e14a82e20871a236e4de8a29d1a6910
+      size: 63
     - path: plots
       hash: md5
-      md5: 475290a7c4d2700fc45e1fb18a97cfa3.dir
-      size: 23351
+      md5: f54d752c5dc4fb1b83c24d7942c2403d.dir
+      size: 22093
       nfiles: 1

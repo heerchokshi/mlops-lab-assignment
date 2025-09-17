@@ -17,7 +17,7 @@ training:
 # Model selection and hyperparameters
 # Options: random_forest, logistic_regression
 model:
-  name: random_forest # Change this to 'logistic_regression' to switch models
+  name: logistic_regression # Change this to 'logistic_regression' to switch models
   
   # Parameters for RandomForestClassifier
   random_forest:
