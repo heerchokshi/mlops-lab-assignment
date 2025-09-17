@@ -21,8 +21,8 @@ model:
   
   # Parameters for RandomForestClassifier
   random_forest:
-    n_estimators: 200
-    max_depth: 7
+    n_estimators: 300
+    max_depth: 10
     random_state: 42
     
   # Parameters for LogisticRegression

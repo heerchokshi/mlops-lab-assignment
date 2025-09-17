@@ -42,8 +42,8 @@ stages:
         model:
           name: random_forest
           random_forest:
-            n_estimators: 200
-            max_depth: 7
+            n_estimators: 300
+            max_depth: 10
             random_state: 42
           logistic_regression:
             C: 0.1
@@ -53,8 +53,8 @@ stages:
     outs:
     - path: models/model.pkl
       hash: md5
-      md5: c96a4b565fec0359da06ad75c3eff109
-      size: 3463961
+      md5: b25448c62c79f07ce37fc5c87329af84
+      size: 11990489
   evaluate:
     cmd: python src/evaluate.py --config=params.yaml
     deps:
@@ -65,8 +65,8 @@ stages:
       nfiles: 2
     - path: models/model.pkl
       hash: md5
-      md5: c96a4b565fec0359da06ad75c3eff109
-      size: 3463961
+      md5: b25448c62c79f07ce37fc5c87329af84
+      size: 11990489
     - path: src/evaluate.py
       hash: md5
       md5: 694d203a406221f532ebaa6b6d7cc06f
@@ -77,10 +77,10 @@ stages:
     outs:
     - path: metrics/metrics.json
       hash: md5
-      md5: 4d28ccd67f97179a0811e8fae903dac7
+      md5: 6403c76cf4d274df9dcdc28f52e66c74
       size: 64
     - path: plots
       hash: md5
-      md5: 1d722a94e406a805657ac5bf50ab9bea.dir
-      size: 22518
+      md5: 475290a7c4d2700fc45e1fb18a97cfa3.dir
+      size: 23351
       nfiles: 1
